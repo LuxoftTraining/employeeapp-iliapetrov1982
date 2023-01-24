@@ -1,26 +1,3 @@
-// const DATA = {
-//     employees: [
-//         {
-//             id: 1,
-//             name: "Peter",
-//             surname: "Peterson",
-//             department: "IT"
-//         },
-//         {
-//             id: 2,
-//             name: "Misha",
-//             surname: "Mishin",
-//             department: "HR"
-//         },
-//         {
-//             id: 3,
-//             name: "Grisha",
-//             surname: "Grishin",
-//             department: "SALES"
-//         },
-//     ]
-// }
-
 function findByName(name, surname) {
     return DATA.employees.filter(
         elem =>
@@ -28,8 +5,6 @@ function findByName(name, surname) {
             && (!surname || elem.surname === surname)
     )
 }
-
-console.log(findByName("Peter", "Peterson"))
 
 function addEmployee(name, surname) {
     if (!name || name.length==0 || !surname || surname.length==0) {
@@ -43,9 +18,6 @@ function addEmployee(name, surname) {
     DATA.employees.push({id,name,surname});
     return id;
 }
-
-console.log(addEmployee("Ilia", "Petrov"))
-console.log(DATA)
 
 function removeEmployee(id) {
     let index = 0;
@@ -72,3 +44,76 @@ function showEmployees() {
     }
 }
 
+const employeeMap = {};
+
+function findById(id) {
+    if (employeeMap[id]) {
+        return employeeMap[id];
+    }
+    for (var e of DATA.employees) {
+        if (id==e.id) {
+            employeeMap[id] = e;
+            return e;
+        }
+    }
+}
+
+function addPhone(id, phone) {
+    const employee = findById(id);
+    const phones = employee.phones;
+    if (!phones) {
+        employee.phones = [];
+    }
+    employee.phones.push(phone);
+}
+
+function setDateOfBirth(id, date) {
+    const employee = findById(id);
+    employee.dateOfBirth = date;
+}
+
+function getAge(id) {
+    const employee = findById(id);
+    let ageDiff = Date.now() - employee.dateOfBirth.getTime();
+    let ageDate = new Date(ageDiff); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+function formatDate(date) {
+    let day = date.getDate();
+    if (day<10) day = '0'+day;
+    let month = date.getMonth()+1;
+    if (month<10) month = '0'+month;
+    let year = date.getFullYear();
+
+    return day + '.' + month + '.' + year;
+}
+
+function getEmployeeInfo(id) {
+    const e = findById(id);
+
+    const phones = e.phones?
+        `List of phones: ${e.phones}`:'';
+    const age = e.dateOfBirth?
+        `Age: ${getAge(e.id)}`:'';
+    return ` 
+  Name: ${e.name}
+  Surname: ${e.surname}
+  Date of birth: ${formatDate(e.dateOfBirth)}
+  ${phones} 
+  ${age}
+ `;
+}
+
+function testEmployee() {
+    addPhone(133, "555-55-55");
+    addPhone(133, "666-66-66");
+    setDateOfBirth(133, new Date(2000,1,1))
+    const info = getEmployeeInfo(133);
+    console.log(info);
+}
+
+function getEmployeeJSON(id) {
+    const e = findById(id);
+    return JSON.stringify(e);
+}
