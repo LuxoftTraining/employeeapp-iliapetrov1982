@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Employees</h1>
+<label for="managerSelect">Manager: </label><select id="managerSelect"></select>
+<div id="employeesPlaceholder"></div>
+<div id="addEmployeeFormErrorMessage"></div>
+<div>
+    Name:
+    <input id="name" placeholder="Name">
+    <br>
+    Surname:
+    <input id="surname" placeholder="Surname">
+    <br>
+    Date of Birth:
+    <input type="date" id="dateOfBirth" placeholder="Date of birth">
+    <br>
+    <button onclick="addEmployeeUI()">Add imployee</button>
+</div>
+
+</body>
+<script src="employees-json.js"></script>
+<script src="service.js"></script>
+<script src="ui.js"></script>
+<script>
+    runUI();
+</script>
+</html>
