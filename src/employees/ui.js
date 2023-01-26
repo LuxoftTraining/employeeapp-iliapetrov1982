@@ -1,3 +1,5 @@
+import DATA from "./employees-json";
+
 const PLACEHOLDER = "employeesPlaceholder"
 
 function clearEmployeesPlaceholder() {
@@ -27,12 +29,12 @@ function removeEmployeeUI(id) {
     showEmployees(DATA.employees);
 }
 
-function runUI() {
+export function runUI() {
     showEmployees(DATA.employees);
     fillSelect(document.getElementById("managerSelect"), getEmployeesOptions());
 }
 
-function addEmployeeUI() {
+export function addEmployeeUI() {
     let errorHTML = "";
     const name = document.getElementById("name").value;
     if (name==="") {

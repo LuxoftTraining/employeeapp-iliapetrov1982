@@ -1,3 +1,5 @@
+import {DATA} from "./employees-json";
+
 function findByName(name, surname) {
     return DATA.employees.filter(
         elem =>
@@ -113,7 +115,7 @@ function testEmployee() {
     console.log(info);
 }
 
-function getEmployeeJSON(id) {
+export function getEmployeeJSON(id) {
     const e = findById(id);
     return JSON.stringify(e);
 }
